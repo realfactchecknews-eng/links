@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinkBoard</title>
+  <script>
+    if (localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {} }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="min-h-screen bg-gray-950 text-gray-100 transition-colors duration-300">
+
+  <!-- Animated background -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="relative z-10 pt-10 pb-4 px-6 text-center">
+    <div class="flex items-center justify-center gap-3 mb-2">
+      <div class="logo-icon">🔗</div>
+      <h1 class="text-4xl font-bold tracking-tight text-white">Link<span class="text-indigo-400">Board</span></h1>
+    </div>
+    <p class="text-gray-400 text-sm">Твои полезные ссылки в одном месте</p>
+  </header>
+
+  <!-- Search + Add button -->
+  <div class="relative z-10 max-w-3xl mx-auto px-4 mt-8 flex flex-col sm:flex-row gap-3">
+    <div class="flex-1 relative">
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">🔍</span>
+      <input id="search" type="text" placeholder="Поиск по ссылкам..."
+        class="w-full pl-9 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-all" />
+    </div>
+    <button id="openModal"
+      class="add-btn flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all duration-200 shadow-lg shadow-indigo-900/40">
+      <span class="text-lg">+</span> Добавить
+    </button>
+  </div>
+
+  <!-- Category filter -->
+  <div class="relative z-10 max-w-3xl mx-auto px-4 mt-4">
+    <div id="categories" class="flex flex-wrap gap-2">
+      <button class="cat-chip active" data-cat="all">Все</button>
+    </div>
+  </div>
+
+  <!-- Links grid -->
+  <main class="relative z-10 max-w-3xl mx-auto px-4 mt-6 pb-20">
+    <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+    <div id="empty" class="hidden text-center py-20">
+      <div class="text-5xl mb-4">🌌</div>
+      <p class="text-gray-500 text-lg">Пока пусто — добавь первую ссылку!</p>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-bold text-white" id="modalTitle">Новая ссылка</h2>
+        <button id="closeModal" class="text-gray-500 hover:text-white text-2xl leading-none transition-colors">&times;</button>
+      </div>
+      <form id="linkForm" class="flex flex-col gap-4">
+        <input type="hidden" id="editId" />
+        <div>
+          <label class="label">URL *</label>
+          <input id="url" type="url" placeholder="https://..." required
+            class="input-field" />
+        </div>
+        <div>
+          <label class="label">Название *</label>
+          <input id="title" type="text" placeholder="Название сайта" required
+            class="input-field" />
+        </div>
+        <div>
+          <label class="label">Описание</label>
+          <input id="desc" type="text" placeholder="Краткое описание"
+            class="input-field" />
+        </div>
+        <div>
+          <label class="label">Категория</label>
+          <input id="cat" type="text" placeholder="Дизайн, Разработка, и т.д."
+            class="input-field" list="catSuggestions" />
+          <datalist id="catSuggestions"></datalist>
+        </div>
+        <button type="submit"
+          class="mt-2 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all duration-200 shadow-lg shadow-indigo-900/40">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
