@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinkBoard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Animated mesh background -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="mesh-blob blob-1"></div>
+    <div class="mesh-blob blob-2"></div>
+    <div class="mesh-blob blob-3"></div>
+    <div class="mesh-blob blob-4"></div>
+  </div>
+
+  <!-- Particles -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-text">Link<span class="accent">Board</span></span>
+      </div>
+      <div class="header-actions">
+        <input id="search" type="text" placeholder="🔍  Поиск..." class="search-input" />
+        <button id="openModal" class="btn-add">
+          <span class="btn-plus">+</span>
+          <span>Добавить</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-sub">Твои полезные ссылки в одном месте</p>
+  </section>
+
+  <!-- Category chips -->
+  <div class="cats-wrap">
+    <div id="categories" class="cats">
+      <button class="chip active" data-cat="all">Все</button>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <main class="main">
+    <div id="grid" class="grid"></div>
+    <div id="empty" class="empty hidden">
+      <div class="empty-icon">🌌</div>
+      <p>Пока пусто — добавь первую ссылку!</p>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="modalTitle">Новая ссылка</h2>
+        <button id="closeModal" class="modal-close">&times;</button>
+      </div>
+      <form id="linkForm">
+        <input type="hidden" id="editId" />
+        <div class="field">
+          <label>URL *</label>
+          <input id="url" type="url" placeholder="https://..." required />
+        </div>
+        <div class="field">
+          <label>Название *</label>
+          <input id="title" type="text" placeholder="Название сайта" required />
+        </div>
+        <div class="field">
+          <label>Описание</label>
+          <input id="desc" type="text" placeholder="Краткое описание" />
+        </div>
+        <div class="field">
+          <label>Категория</label>
+          <input id="cat" type="text" placeholder="Дизайн, Разработка..." list="catList" />
+          <datalist id="catList"></datalist>
+        </div>
+        <div class="field">
+          <label>Цвет карточки</label>
+          <div class="color-picker" id="colorPicker">
+            <div class="color-dot active" data-color="#6366f1" style="background:#6366f1"></div>
+            <div class="color-dot" data-color="#8b5cf6" style="background:#8b5cf6"></div>
+            <div class="color-dot" data-color="#06b6d4" style="background:#06b6d4"></div>
+            <div class="color-dot" data-color="#10b981" style="background:#10b981"></div>
+            <div class="color-dot" data-color="#f59e0b" style="background:#f59e0b"></div>
+            <div class="color-dot" data-color="#ef4444" style="background:#ef4444"></div>
+            <div class="color-dot" data-color="#ec4899" style="background:#ec4899"></div>
+            <div class="color-dot" data-color="#f97316" style="background:#f97316"></div>
+          </div>
+          <input type="hidden" id="color" value="#6366f1" />
+        </div>
+        <button type="submit" class="btn-submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
